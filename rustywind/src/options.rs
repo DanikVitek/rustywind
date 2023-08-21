@@ -14,7 +14,6 @@ use std::path::{Path, PathBuf};
 use std::str::FromStr;
 
 use crate::parser;
-use crate::Cli;
 
 #[derive(Debug)]
 pub enum WriteMode {

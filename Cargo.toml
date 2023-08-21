@@ -1,50 +1,13 @@
-[package]
-authors = ["Praveen Perera <praveen@avencera.com>"]
-edition = "2021"
-license = "Apache-2.0"
-name = "rustywind"
-version = "0.19.0"
+[workspace]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+members = [
+    "rustywind",
+    "rustywind_cli"
+]
 
-[dependencies]
-# cli
-clap = { version = "4.3", features = ["cargo", "derive", "unstable-styles"] }
-indoc = "2.0"
-
-# files
-ignore = "0.4"
-
-# utils
-itertools = "0.11"
-once_cell = "1.18"
-
-# string matching
-aho-corasick = "1.0"
-regex = "1.9"
-
-# logging
-env_logger = "0.10"
-log = "0.4"
-
-# parallel
-rayon = "1.5"
-
-# http
-ureq = "2.7"
-
-# errors
-color-eyre = "0.6"
-eyre = "0.6"
-
-# json parsing
-serde = {version = "1.0", features = ["derive"]}
-serde_json = "1.0"
-rustls = { version = "0.21.6", features = ["dangerous_configuration"] }
-anstyle = "1.0.1"
-
-[dev-dependencies]
-pretty_assertions = "1.4"
+default-members = [
+    "rustywind_cli"
+]
 
 [profile.release]
 codegen-units = 1

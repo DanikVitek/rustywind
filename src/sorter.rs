@@ -1,7 +1,6 @@
 use std::{borrow::Cow, collections::HashMap};
 
 use aho_corasick::{Anchored, Input};
-use itertools::Itertools;
 use regex::Captures;
 
 use crate::consts::{VARIANTS, VARIANT_SEARCHER};
@@ -84,7 +83,7 @@ fn sort_classes_vec<'a>(
         }
     }
 
-    tailwind_classes.sort_by_key(|&(_class, class_placement)| class_placement);
+    tailwind_classes.sort_unstable_by_key(|&(_class, class_placement)| class_placement);
 
     let sorted_tailwind_classes: Vec<&str> = tailwind_classes
         .iter()

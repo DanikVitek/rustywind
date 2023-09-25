@@ -59,7 +59,7 @@ fn sort_classes(class_string: &str, options: &Options) -> String {
 fn sort_classes_vec<'a>(
     classes: impl Iterator<Item = &'a str>,
     sorter: &HashMap<String, usize>,
-) -> Vec<&'a str> {
+) -> impl Iterator<Item = &'a str> {
     let enumerated_classes = classes.map(|class| ((class), sorter.get(class)));
 
     let mut tailwind_classes: Vec<(&str, &usize)> = vec![];
@@ -104,12 +104,10 @@ fn sort_classes_vec<'a>(
         custom_classes = new_custom_classes
     }
 
-    [
-        &sorted_tailwind_classes[..],
-        &sorted_variant_classes[..],
-        &custom_classes[..],
-    ]
-    .concat()
+    sorted_tailwind_classes
+        .into_iter()
+        .chain(sorted_variant_classes.into_iter())
+        .chain(custom_classes.into_iter())
 }
 
 fn sort_variant_classes<'a>(

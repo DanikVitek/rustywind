@@ -16,7 +16,6 @@ indoc = "2.0"
 ignore = "0.4"
 
 # utils
-itertools = "0.11"
 once_cell = "1.18"
 
 # string matching

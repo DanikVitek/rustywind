@@ -37,15 +37,18 @@ fn sort_classes(class_string: &str, options: &Options) -> String {
         Sorter::CustomSorter(custom_sorter) => custom_sorter,
     };
 
-    let str_vec = if options.allow_duplicates {
-        sort_classes_vec(class_string.split_ascii_whitespace(), sorter)
-    } else {
-        sort_classes_vec(class_string.split_ascii_whitespace().unique(), sorter)
-    };
+    let mut string = String::with_capacity(class_string.len() * 2);
+    let mut last_str = None;
 
-    let mut string = String::with_capacity(str_vec.len() * 2);
+    for str in sort_classes_vec(class_string.split_ascii_whitespace(), sorter) {
+        // skip duplicates
+        if !options.allow_duplicates && last_str == Some(str) {
+            continue;
+        }
 
-    for str in str_vec {
+        // keep reference to last added class
+        last_str = Some(&str);
+
         string.push_str(str);
         string.push(' ')
     }

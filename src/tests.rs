@@ -1,7 +1,7 @@
 use pretty_assertions::assert_eq;
 
 use super::*;
-use std::collections::HashSet;
+use ahash::AHashSet as HashSet;
 use std::path::Path;
 
 fn default_options_for_test() -> Options {

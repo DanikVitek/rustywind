@@ -1,14 +1,15 @@
 use std::{
-    collections::{hash_map::Entry, HashMap},
+    collections::hash_map::Entry,
     fs::File,
     io::{BufRead, BufReader, Read},
 };
 
+use ahash::AHashMap as HashMap;
 use eyre::Result;
 use once_cell::sync::Lazy;
 use regex::Regex;
 
-static PARSER_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"^(\.[^\s]+)[ ]"#).unwrap());
+static PARSER_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"^(\.[^\s]+)[ ]").unwrap());
 
 pub fn parse_classes_from_file(css_file: File) -> Result<HashMap<String, usize>> {
     let css_reader = BufReader::new(css_file);
@@ -17,7 +18,7 @@ pub fn parse_classes_from_file(css_file: File) -> Result<HashMap<String, usize>>
 
 pub fn parse_classes<T: Read>(css_file: BufReader<T>) -> Result<HashMap<String, usize>> {
     let css_reader = BufReader::new(css_file);
-    let mut classes: HashMap<String, usize> = HashMap::new();
+    let mut classes: HashMap<String, usize> = HashMap::default();
 
     let mut index = 0_usize;
     for line in css_reader.lines() {

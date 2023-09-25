@@ -1,5 +1,6 @@
-use std::{borrow::Cow, collections::HashMap};
+use std::borrow::Cow;
 
+use ahash::AHashMap as HashMap;
 use aho_corasick::{Anchored, Input};
 use regex::Captures;
 
@@ -46,7 +47,7 @@ fn sort_classes(class_string: &str, options: &Options) -> String {
         }
 
         // keep reference to last added class
-        last_str = Some(&str);
+        last_str = Some(str);
 
         string.push_str(str);
         string.push(' ')
@@ -106,8 +107,8 @@ fn sort_classes_vec<'a>(
 
     sorted_tailwind_classes
         .into_iter()
-        .chain(sorted_variant_classes.into_iter())
-        .chain(custom_classes.into_iter())
+        .chain(sorted_variant_classes)
+        .chain(custom_classes)
 }
 
 fn sort_variant_classes<'a>(
@@ -153,7 +154,8 @@ fn test_sort_classes_vec() {
             ]
             .into_iter(),
             &SORTER
-        ),
+        )
+        .collect::<Vec<_>>(),
         vec![
             "inline-block",
             "inline",

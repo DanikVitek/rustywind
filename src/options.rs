@@ -1,12 +1,12 @@
 pub mod vite;
 
+use ahash::AHashMap as HashMap;
+use ahash::AHashSet as HashSet;
 use color_eyre::Help;
 use eyre::{Context, Result};
 use ignore::WalkBuilder;
 use regex::Regex;
 use serde::Deserialize;
-use std::collections::HashMap;
-use std::collections::HashSet;
 use std::fs;
 use std::io::Read;
 use std::path::{Path, PathBuf};
@@ -138,17 +138,14 @@ fn get_starting_path_from_cli(cli: &Cli) -> Vec<PathBuf> {
         .collect()
 }
 
+#[rustfmt::skip]
 fn get_write_mode_from_cli(cli: &Cli) -> WriteMode {
-    if cli.dry_run {
-        WriteMode::DryRun
-    } else if cli.write {
-        WriteMode::ToFile
-    } else if cli.check_formatted {
-        WriteMode::CheckFormatted
-    } else if cli.stdin {
-        WriteMode::ToStdOut
-    } else {
-        WriteMode::DryRun
+    match cli {
+        Cli { write: true, .. } => WriteMode::ToFile,
+        Cli { stdin: true, .. } => WriteMode::ToStdOut,
+        Cli { check_formatted: true, .. } => WriteMode::CheckFormatted,
+        Cli { dry_run: true, .. } => WriteMode::DryRun,
+        _ => WriteMode::DryRun,
     }
 }
 
